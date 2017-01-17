@@ -1,0 +1,89 @@
+//=============================================================================
+// Name      :   Impec2D: Implicit Pressure Explicit Concentration  
+//               in two spatial dimensions
+//
+// Author     :  Peter Wirnsberger (University of Cambridge), pw359@cam.ac.uk
+// Version    :  v3
+//
+// Copyright :   This software was developed as part of an MPhil course on
+//               Scientific Computing in the Cavendish Laboratory, University
+//               of Cambridge under supervision of Dr. N. Nikiforakis.
+//               This software is distributed under the GNU General Public 
+//               License.
+//
+// Description:  The software solves the incompressible equations for miscible
+//               displacement for two symmetric configurations using different
+//               finite-volume solvers. The underlying equations exhibit a
+//               physical instability and therefore numerical errors arising
+//               from different discretizations lead to different
+//               solutions. 
+//
+//               Please have a look at my dissertation (goe.pdf) 
+//               for more information.
+//
+//============================================================================
+
+
+
+1.) Install blas & lapack
+-------------------------
+
+  sudo apt-get install libblas3 libblas-dev liblapack3 liblapack-dev
+
+2.) Install a fortran compiler (for hypre)
+------------------------------------------
+
+  sudo apt-get install gfortran
+
+3.) Install openmpi (or any other mpi compiler you prefer)
+----------------------------------------------------------
+
+  sudo apt-get install libopenmpi-dev openmpi-bin 
+
+4.) Install HYPRE 
+-----------------
+
+This is the package implementing the multigrid-solver. You can download it here:
+https://computation.llnl.gov/casc/hypre/software.html. Note that they will ask you to register.
+The software was tested with hypre-2.8.0b, but you could try using the latest version of hypre. 
+
+  tar xvf hypre-2.8.0b.tar.gz 
+  cd hypre-2.8.0b
+
+  vi INSTALL
+  (close vi again)
+
+  sudo mkdir /opt/hypre2.8b
+  cd src
+  ./configure  --with-lapack-libs="blas lapack" --with-lapack-lib-dirs="/usr/lib" --enable-shared
+  make
+
+  sudo cp -r hypre/* /opt/hypre2.8b
+
+
+5.) Install config++
+--------------------
+
+  tar xvf libconfig-1.4.8.tar.gz
+  cd libconfig-1.4.8
+  ./configure
+  make
+
+  (files are installed under /usr/local/lib, etc by default)
+
+6.) Install Impec2D
+-------------------
+
+  cd Impec2D
+  ./compile.bash
+
+
+7.) Run example files
+---------------------
+
+After successful installation, you should be able to run any of the examples provided.
+
+  ./Impec2D examples/parallel.cfg
+
+
+
